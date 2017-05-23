@@ -74,9 +74,24 @@ $Patched -join (', ') |Out-File -FilePath $log -Append
 "Of the $($WindowsComputers.count) windows computers in active directory, $($OffComputers.count) were off, $($CheckFail.count) couldn't be checked, $($Unpatched.count) were unpatched and $($Patched.count) were successfully patched."
 'Full details in the log file.'
 
+
+
+
+
 try
 {
   Start-Process -FilePath notepad++ -ArgumentList $log
+  $body = $log
+
+##Assembles and sends completion email with DL information##
+$emailFrom = "sam.kaufman@wcaa.us"
+$emailTo = "sam.kaufman@wcaa.us"
+$subject = "Wayne County IT WannaCry Report"
+$smtpServer = "SEXCH01.wcaa.local"
+
+
+Send-MailMessage -To $emailTo -From $emailFrom -Subject $subject -BodyAsHtml -Body $body -SmtpServer $smtpServer
+
 }
 catch
 {
