@@ -80,8 +80,10 @@ $Patched -join (', ') |Out-File -FilePath $log -Append
 
 try
 {
-  Start-Process -FilePath notepad++ -ArgumentList $log
-  $body = $log
+ # Start-Process -FilePath notepad++ -ArgumentList $log
+  
+  
+  $body = Get-content $log
 
 ##Assembles and sends completion email with DL information##
 $emailFrom = "sam.kaufman@wcaa.us"
@@ -95,5 +97,5 @@ Send-MailMessage -To $emailTo -From $emailFrom -Subject $subject -BodyAsHtml -Bo
 }
 catch
 {
-  Start-Process -FilePath notepad.exe -ArgumentList $log
+ # Start-Process -FilePath notepad.exe -ArgumentList $log
 }
